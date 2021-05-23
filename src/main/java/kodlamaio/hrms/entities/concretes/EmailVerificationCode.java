@@ -11,11 +11,17 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+@Table(name = "email_verification_codes")
+public class EmailVerificationCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "user_id")
+    private int userId;
+
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "created_at")
     private LocalDate createdAt;
