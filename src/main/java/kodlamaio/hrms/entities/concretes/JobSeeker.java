@@ -26,5 +26,5 @@ public class JobSeeker extends User {
     private String identityNumber;
 
     @Column(name = "year_of_birth")
-    private String yearOfBirth;
+    private int yearOfBirth;
 }
