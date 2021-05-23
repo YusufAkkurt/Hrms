@@ -1,8 +1,6 @@
 package kodlamaio.hrms.entities.abstracts;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,14 +20,14 @@ public class User {
     private String email;
 
     @Column(name = "email_verified")
-    private boolean emailVerified;
+    private boolean emailVerified = false;
 
     @Column(name = "password")
     private String password;
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
 }

@@ -11,10 +11,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "job_seekers")
 @EqualsAndHashCode(callSuper = true)
+@PrimaryKeyJoinColumn(name="user_id", referencedColumnName="id")
 public class JobSeeker extends User {
-    @Id
-    @Column(name = "user_id")
-    private int userId;
 
     @Column(name = "first_name")
     private String firstName;

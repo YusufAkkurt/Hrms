@@ -14,3 +14,4 @@ public interface UserService {
     Result update(User user);
     Result delete(User user);
 }
+
