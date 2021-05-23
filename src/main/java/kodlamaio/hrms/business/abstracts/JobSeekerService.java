@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface JobSeekerService {
     DataResult<List<JobSeeker>> getAll();
+    DataResult<JobSeeker> getByIdentityNumber(String identityNumber);
 
     Result add(JobSeeker jobSeeker);
     Result update(JobSeeker jobSeeker);

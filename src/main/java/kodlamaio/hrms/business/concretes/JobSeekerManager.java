@@ -1,10 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.JobSeekerService;
-import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
-import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,12 @@ public class JobSeekerManager implements JobSeekerService {
 
     public DataResult<List<JobSeeker>> getAll() {
         return new SuccessDataResult<>(this.jobSeekerDao.findAll());
+    }
+
+    public DataResult<JobSeeker> getByIdentityNumber(String identityNumber) {
+        var result = this.jobSeekerDao.findByIdentityNumber(identityNumber);
+
+        return result != null ? new SuccessDataResult<>(result, "Kullanıcı mevcut") : new ErrorDataResult<>("Kullanıcı bulunamadı");
     }
 
     public Result add(JobSeeker jobSeeker) {

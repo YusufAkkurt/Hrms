@@ -1,14 +1,9 @@
 package kodlamaio.hrms.business.concretes;
 
-import kodlamaio.hrms.business.abstracts.AuthService;
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
-import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.business.abstracts.*;
 import kodlamaio.hrms.business.validators.jobSeekerValidations.JobSeekerRegisterValidation;
 import kodlamaio.hrms.core.adapters.IdentityValidationService;
-import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorResult;
-import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.entities.abstracts.User;
 import kodlamaio.hrms.entities.auth.JobSeekerRegister;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
@@ -40,10 +35,11 @@ public class AuthManager implements AuthService {
         if (!checkRealUser)
             return new ErrorResult("Girilen bilgiler geçersiz");
 
-        var result = addUser(jobSeeker);
+        var checkIdentity = checkUserByIdentityNumber(jobSeeker.getIdentityNumber());
+        if (checkIdentity != null) return checkIdentity;
 
-        if (!result.isSuccess())
-            return new ErrorResult("Kullanıcı eklenemedi");
+        var result = addUser(jobSeeker);
+        if (!result.isSuccess()) return result;
 
         jobSeeker.setId(result.getData().getId());
         this.jobSeekerService.add(jobSeeker);
@@ -56,7 +52,20 @@ public class AuthManager implements AuthService {
     }
 
     private DataResult<User> addUser(User user) {
+        boolean validate = this.userService.getByEmail(user.getEmail()).isSuccess();
+        if (validate) return new ErrorDataResult("Eposta adresi kullanımda");
+
         this.userService.add(user);
         return this.userService.getByEmail(user.getEmail());
+    }
+
+    private Result checkUserByIdentityNumber(String identityNumber) {
+        var jobSeeker = this.jobSeekerService.getByIdentityNumber(identityNumber);
+        System.out.println(jobSeeker.getData());
+
+        if (jobSeeker.isSuccess())
+            return new ErrorResult("Kimlik numarası kullanımda");
+
+        return null;
     }
 }
