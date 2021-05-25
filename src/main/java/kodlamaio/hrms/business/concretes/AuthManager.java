@@ -1,10 +1,12 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.*;
-import kodlamaio.hrms.business.validators.jobSeekerValidations.JobSeekerRegisterValidation;
+import kodlamaio.hrms.business.validators.auth.EmployerRegisterValidation;
+import kodlamaio.hrms.business.validators.auth.JobSeekerRegisterValidation;
 import kodlamaio.hrms.core.adapters.IdentityValidationService;
 import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.entities.abstracts.User;
+import kodlamaio.hrms.entities.auth.EmployerRegister;
 import kodlamaio.hrms.entities.auth.JobSeekerRegister;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +17,17 @@ public class AuthManager implements AuthService {
 
     private final UserService userService;
     private final JobSeekerService jobSeekerService;
+    private final EmployerService employerService;
     private final IdentityValidationService identityValidationService;
     private final EmailVerificationService emailVerificationService;
 
     @Autowired
     public AuthManager(UserService userService, JobSeekerService jobSeekerService,
-                       IdentityValidationService identityValidationService,
+                       EmployerService employerService, IdentityValidationService identityValidationService,
                        EmailVerificationService emailVerificationService) {
         this.userService = userService;
         this.jobSeekerService = jobSeekerService;
+        this.employerService = employerService;
         this.identityValidationService = identityValidationService;
         this.emailVerificationService = emailVerificationService;
     }
@@ -47,6 +51,19 @@ public class AuthManager implements AuthService {
 
         jobSeeker.setId(result.getData().getId());
         this.jobSeekerService.add(jobSeeker);
+
+        return new SuccessResult("Kayıt olundu");
+    }
+
+    public Result registerForEmployer(EmployerRegister employerRegister) {
+        var validate = EmployerRegisterValidation.checkValidate(employerRegister);
+        if (validate != null) return validate;
+        var employer = employerRegister.getEmployer();
+
+        var result = addUser(employer);
+        if (!result.isSuccess()) return result;
+
+        this.employerService.add(employer);
 
         return new SuccessResult("Kayıt olundu");
     }
@@ -83,7 +100,6 @@ public class AuthManager implements AuthService {
 
     private Result checkUserByIdentityNumber(String identityNumber) {
         var jobSeeker = this.jobSeekerService.getByIdentityNumber(identityNumber);
-        System.out.println(jobSeeker.getData());
 
         if (jobSeeker.isSuccess())
             return new ErrorResult("Kimlik numarası kullanımda");

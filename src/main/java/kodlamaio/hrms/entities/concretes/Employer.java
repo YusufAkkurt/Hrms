@@ -21,7 +21,7 @@ public class Employer extends User {
     private String webSite;
 
     @Column(name = "verified_by_personnel")
-    private boolean verifiedByPersonnel;
+    private boolean verifiedByPersonnel = false;
 
     @Column(name = "phone_number")
     private String phoneNumber;
