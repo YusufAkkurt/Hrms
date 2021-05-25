@@ -16,12 +16,16 @@ public class AuthManager implements AuthService {
     private final UserService userService;
     private final JobSeekerService jobSeekerService;
     private final IdentityValidationService identityValidationService;
+    private final EmailVerificationService emailVerificationService;
 
     @Autowired
-    public AuthManager(UserService userService, JobSeekerService jobSeekerService, IdentityValidationService identityValidationService) {
+    public AuthManager(UserService userService, JobSeekerService jobSeekerService,
+                       IdentityValidationService identityValidationService,
+                       EmailVerificationService emailVerificationService) {
         this.userService = userService;
         this.jobSeekerService = jobSeekerService;
         this.identityValidationService = identityValidationService;
+        this.emailVerificationService = emailVerificationService;
     }
 
     public Result registerForJobSeeker(JobSeekerRegister jobSeekerRegister) {
@@ -49,6 +53,24 @@ public class AuthManager implements AuthService {
 
     public Result loginForJobSeeker(JobSeeker jobSeeker) {
         return new SuccessResult("Giriş yapıldı");
+    }
+
+    public Result activateEmail(String activationCode) {
+        var existingEmailCode = this.emailVerificationService.getByCode(activationCode);
+        if (!existingEmailCode.isSuccess()) return existingEmailCode;
+
+        if (!existingEmailCode.getData().isActive())
+            return new ErrorResult("Bu kod artık geçersiz lütfen yeni bir kod isteyin");
+
+        var user = this.userService.getById(existingEmailCode.getData().getUserId());
+        if (!user.isSuccess()) return user;
+
+        user.getData().setEmailVerified(true);
+        var result = this.userService.update(user.getData());
+
+        return result.isSuccess()
+                ? new SuccessResult("Email aktivasyonu başarılı")
+                : new ErrorResult("Email aktivasyonu başarısız");
     }
 
     private DataResult<User> addUser(User user) {

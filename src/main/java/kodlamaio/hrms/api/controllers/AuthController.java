@@ -5,10 +5,7 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.auth.JobSeekerRegister;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
@@ -29,5 +26,11 @@ public class AuthController {
     @PostMapping("login")
     public Result loginForJobSeeker(@RequestBody JobSeeker jobSeeker) {
         return this.authService.loginForJobSeeker(jobSeeker);
+    }
+
+    @GetMapping("activateEmail")
+    @ResponseBody
+    public Result activateEmail(@RequestParam String activationCode) {
+        return this.authService.activateEmail(activationCode);
     }
 }

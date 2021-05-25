@@ -8,10 +8,11 @@ import java.util.List;
 
 public interface UserService {
     DataResult<List<User>> getAll();
+    DataResult<User> getById(int id);
     DataResult<User> getByEmail(String email);
 
     Result add(User user);
     Result update(User user);
     Result delete(User user);
+    Result activateUser(int id, String code);
 }
-

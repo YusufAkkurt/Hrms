@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "email_verification_codes")
-public class EmailVerificationCode {
+@Table(name = "email_verifications")
+public class EmailVerification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,8 +24,8 @@ public class EmailVerificationCode {
     private String code;
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
 }
