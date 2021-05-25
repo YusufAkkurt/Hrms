@@ -29,7 +29,6 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     public Result add(JobSeeker jobSeeker) {
-        System.out.println(jobSeeker);
         this.jobSeekerDao.save(jobSeeker);
         return new SuccessResult("Eklendi");
     }

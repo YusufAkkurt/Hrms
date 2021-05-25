@@ -10,3 +10,4 @@ public class JobSeekerRegister {
     private JobSeeker jobSeeker;
     private String password;
 }
+
