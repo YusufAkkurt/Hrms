@@ -13,9 +13,6 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name="user_id", referencedColumnName="id")
 public class Personnel extends User {
-//    @Id
-//    @Column(name = "user_id")
-//    private int userId;
 
     @Column(name = "department_id")
     private int departmentId;
