@@ -1,8 +1,8 @@
 package kodlamaio.hrms.entities.concretes;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,15 +15,14 @@ import java.time.LocalDate;
 public class JobPosition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
 
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
 }
