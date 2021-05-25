@@ -33,6 +33,15 @@ public class EmployerManager implements EmployerService {
                 : new ErrorDataResult<>("Onay bekleyen iş veren bulunamadı");
     }
 
+    public DataResult<List<Employer>> getAll() {
+        var result = this.employerDao.findAll();
+
+        if (result.isEmpty())
+            return new ErrorDataResult<>("Liste boş");
+
+        return new SuccessDataResult<>(result, "Listelendi");
+    }
+
     public Result add(Employer employer) {
         this.employerDao.save(employer);
         return new SuccessResult("Eklendi");
