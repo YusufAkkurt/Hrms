@@ -19,7 +19,12 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     public DataResult<List<JobSeeker>> getAll() {
-        return new SuccessDataResult<>(this.jobSeekerDao.findAll());
+        var result = this.jobSeekerDao.findAll();
+
+        if (result.isEmpty())
+            return new ErrorDataResult<>("Liste boş");
+
+        return new SuccessDataResult<>(result, "Listelendi");
     }
 
     public DataResult<JobSeeker> getByIdentityNumber(String identityNumber) {
