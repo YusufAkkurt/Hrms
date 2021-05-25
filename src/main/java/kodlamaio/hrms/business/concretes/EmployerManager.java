@@ -18,6 +18,14 @@ public class EmployerManager implements EmployerService {
         this.employerDao = employerDao;
     }
 
+    public DataResult<Employer> getById(int userId) {
+        var result = this.employerDao.findById(userId);
+
+        return result.isEmpty()
+                ? new ErrorDataResult<>("Kullanıcı bulunamadı")
+                : new SuccessDataResult<>(result.get(), "Kullanıcı getirildi");
+    }
+
     public DataResult<List<Employer>> getByPersonnelActivateFalse() {
         var result = this.employerDao.findByVerifiedByPersonnelFalse();
         return result.size() > 0

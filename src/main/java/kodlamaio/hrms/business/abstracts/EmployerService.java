@@ -7,6 +7,7 @@ import kodlamaio.hrms.entities.concretes.Employer;
 import java.util.List;
 
 public interface EmployerService {
+    DataResult<Employer> getById(int userId);
     DataResult<List<Employer>> getByPersonnelActivateFalse();
 
     Result add(Employer employer);
