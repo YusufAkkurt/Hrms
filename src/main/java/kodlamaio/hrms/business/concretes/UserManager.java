@@ -32,9 +32,9 @@ public class UserManager implements UserService {
 
     public DataResult<User> getById(int id) {
         var result = this.userDao.findById(id);
-        return result.get() != null
-                ? new SuccessDataResult<>(result.get(), "Kullanıcı bulundu")
-                : new ErrorDataResult<>(null, "Kullanıcı bulunamadı");
+        return result.isEmpty()
+                ? new ErrorDataResult<>(null, "Kullanıcı bulunamadı")
+                : new SuccessDataResult<>(result.get(), "Kullanıcı bulundu");
     }
 
     public DataResult<User> getByEmail(String email) {
@@ -65,10 +65,7 @@ public class UserManager implements UserService {
         var formatter = DateTimeFormatter.ofPattern("yyMMddHHmmssSSS");
         var localDateTime = LocalDateTime.now();
 
-        var code = formatter.format(localDateTime) + uuid;
-
-        System.out.println(code);
-        return code;
+        return formatter.format(localDateTime) + uuid;
     }
 
     public Result update(User user) {
@@ -84,8 +81,9 @@ public class UserManager implements UserService {
     public Result activateUser(int id, String code) {
         var user = this.userDao.findById(id);
 
+        if (user.isEmpty()) return new ErrorResult("Active edilecek Kullanıcı bulunamadı");
+
         user.get().setEmailVerified(true);
-        System.out.println(user);
         return new SuccessDataResult<>(user);
     }
 }

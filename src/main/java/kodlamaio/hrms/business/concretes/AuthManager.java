@@ -49,7 +49,6 @@ public class AuthManager implements AuthService {
         var result = addUser(jobSeeker);
         if (!result.isSuccess()) return result;
 
-        jobSeeker.setId(result.getData().getId());
         this.jobSeekerService.add(jobSeeker);
 
         return new SuccessResult("Kayıt olundu");
@@ -91,8 +90,8 @@ public class AuthManager implements AuthService {
     }
 
     private DataResult<User> addUser(User user) {
-        boolean validate = this.userService.getByEmail(user.getEmail()).isSuccess();
-        if (validate) return new ErrorDataResult("Eposta adresi kullanımda");
+        var existingEmail = this.userService.getByEmail(user.getEmail());
+        if (existingEmail.isSuccess()) return existingEmail;
 
         this.userService.add(user);
         return this.userService.getByEmail(user.getEmail());
