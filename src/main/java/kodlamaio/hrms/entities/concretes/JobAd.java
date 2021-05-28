@@ -30,7 +30,7 @@ public class JobAd {
     private int openPositionCount;
 
     @Column(name = "application_deadline")
-    private int applicationDeadline;
+    private LocalDate applicationDeadline;
 
     @Column(name = "created_at")
     private LocalDate createdAt = LocalDate.now();
