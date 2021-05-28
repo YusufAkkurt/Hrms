@@ -1,9 +1,15 @@
 package kodlamaio.hrms.business.validators;
 
+import java.time.LocalDate;
+
 public class ValidationBase {
 
     public static boolean requiredString(String value) {
         return value != null && value.length() != 0;
+    }
+
+    public static boolean requiredLocalDate(LocalDate value) {
+        return value != null;
     }
 
     public static boolean requiredInteger(int value) {

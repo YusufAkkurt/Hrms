@@ -9,6 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface JobAdDao extends JpaRepository<JobAd, Integer> {
-    @Query("select new kodlamaio.hrms.entities.dtos.JobAdDto(JobAd.id, jobAd.employer.companyName, jobAd.job.name, jobAd.openPositionCount, jobAd.createdAt, jobAd.applicationDeadline) from JobAd jobAd where jobAd.active = :active")
-    List<JobAdDto> dtoGetJobAdsByActiveIs(@Param("active") boolean active);
+
+    @Query("select new kodlamaio.hrms.entities.dtos.JobAdDto(id, employer.companyName, job.name, openPositionCount, createdAt, applicationDeadline) from JobAd where employer.id = :employerId")
+    List<JobAdDto> dtoGetJobAdsByActiveAndEmployerId(@Param("employerId") int employerId);
+
+    @Query("select new kodlamaio.hrms.entities.dtos.JobAdDto(id, employer.companyName, job.name, openPositionCount, createdAt, applicationDeadline) from JobAd where active = :status")
+    List<JobAdDto> dtoGetJobAdsByActiveIs(@Param("status") boolean status);
 }
