@@ -1,9 +1,9 @@
 package kodlamaio.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,9 +13,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "jobs")
+@Table(name = "cities")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobAds"})
-public class Job {
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -29,6 +29,6 @@ public class Job {
     @Column(name = "active")
     private boolean active = true;
 
-    @OneToMany(mappedBy = "job")
+    @OneToMany(mappedBy = "city")
     private List<JobAd> jobAds;
 }
