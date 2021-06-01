@@ -1,6 +1,7 @@
 package kodlamaio.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,17 @@ public class JobExperience {
     @Column(name = "active")
     private boolean active = true;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "job_seeker_id")
+    private JobSeeker jobSeeker;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "jobExperiences")
     private List<Resume> resumes;
+
+    public String getFinishDate() {
+        if (this.finishDate == null) return "Devam ediyor";
+        return this.finishDate.toString();
+    }
 }

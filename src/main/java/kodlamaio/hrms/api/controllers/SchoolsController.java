@@ -24,6 +24,16 @@ public class SchoolsController {
         return this.schoolService.getAll();
     }
 
+    @GetMapping("getByJobSeekerId")
+    public DataResult<List<School>> getByJobSeekerId(@RequestParam int jobSeekerId) {
+        return this.schoolService.getByJobSeekerId(jobSeekerId);
+    }
+
+    @GetMapping("getByJobSeekerIdDescOnCreatedAt")
+    public DataResult<List<School>> getByJobSeekerIdDescOnCreatedAt(@RequestParam int jobSeekerId) {
+        return this.schoolService.getByJobSeekerIdDescOnCreatedAt(jobSeekerId);
+    }
+
     @PostMapping
     public Result add(@RequestBody School school) {
         return this.schoolService.add(school);

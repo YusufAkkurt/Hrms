@@ -9,6 +9,8 @@ import java.util.List;
 public interface JobExperienceService {
     DataResult<List<JobExperience>> getAll();
     DataResult<JobExperience> getById(int id);
+    DataResult<List<JobExperience>> getByJobSeeker(int jobSeekerId);
+    DataResult<List<JobExperience>> getByJobSeekerIdDescOnCreatedAt(int jobSeekerId);
 
     Result add(JobExperience jobExperience);
 }

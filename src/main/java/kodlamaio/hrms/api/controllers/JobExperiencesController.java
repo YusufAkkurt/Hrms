@@ -22,6 +22,16 @@ public class JobExperiencesController {
         return this.jobExperienceService.getAll();
     }
 
+    @GetMapping("getByJobSeekerId")
+    public DataResult<List<JobExperience>> getByJobSeekerId(@RequestParam int jobSeekerId) {
+        return this.jobExperienceService.getByJobSeeker(jobSeekerId);
+    }
+
+    @GetMapping("getByJobSeekerIdDescOnCreatedAt")
+    public DataResult<List<JobExperience>> getByJobSeekerIdDescOnCreatedAt(@RequestParam int jobSeekerId) {
+        return this.jobExperienceService.getByJobSeekerIdDescOnCreatedAt(jobSeekerId);
+    }
+
     @PostMapping
     public Result add(@RequestBody JobExperience jobExperience) {
         return this.jobExperienceService.add(jobExperience);

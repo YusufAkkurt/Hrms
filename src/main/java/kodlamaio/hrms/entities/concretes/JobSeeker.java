@@ -14,7 +14,6 @@ import java.util.List;
 @Table(name = "job_seekers")
 @EqualsAndHashCode(callSuper = true)
 @PrimaryKeyJoinColumn(name="user_id", referencedColumnName="id")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "resumes"})
 public class JobSeeker extends User {
 
     @Column(name = "first_name")
@@ -31,4 +30,12 @@ public class JobSeeker extends User {
 
     @OneToMany(mappedBy = "jobSeeker")
     private List<Resume> resumes;
+
+    @JsonIgnoreProperties
+    @OneToMany(mappedBy = "jobSeeker")
+    private List<School> schools;
+
+    @JsonIgnoreProperties
+    @OneToMany(mappedBy = "jobSeeker")
+    private List<JobExperience> jobExperiences;
 }

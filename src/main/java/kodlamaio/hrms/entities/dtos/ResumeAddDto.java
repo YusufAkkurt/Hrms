@@ -17,4 +17,6 @@ public class ResumeAddDto {
     private String coverLetter;
     private List<Integer> schoolIds;
     private List<Integer> jobExperienceIds;
+    private List<Integer> foreignLanguageIds;
+    private List<Integer> technologyIds;
 }

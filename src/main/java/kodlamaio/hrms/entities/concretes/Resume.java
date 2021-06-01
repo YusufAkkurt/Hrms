@@ -32,13 +32,16 @@ public class Resume {
     @Column(name = "cover_letter")
     private String coverLetter;
 
+    @JsonIgnore
     @Column(name = "created_at")
     private LocalDate createdAt = LocalDate.now();
 
+    @JsonIgnore
     @Column(name = "active")
     private boolean active = true;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "job_seeker_id")
     private JobSeeker jobSeeker;
 
@@ -55,6 +58,20 @@ public class Resume {
             joinColumns = {@JoinColumn(name = "resume_id")},
             inverseJoinColumns = {@JoinColumn(name = "job_experience_id")})
     private Set<JobExperience> jobExperiences = new HashSet<>();
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "resume_foreign_languages",
+            joinColumns = {@JoinColumn(name = "resume_id")},
+            inverseJoinColumns = {@JoinColumn(name = "foreign_language_id")})
+    private Set<ForeignLanguage> foreignLanguages = new HashSet<>();
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "resume_technologies",
+            joinColumns = {@JoinColumn(name = "resume_id")},
+            inverseJoinColumns = {@JoinColumn(name = "technology_id")})
+    private Set<Technology> technologies = new HashSet<>();
 
     public Resume(JobSeeker jobSeeker, String imageUrl, String github, String linkedin, String coverLetter) {
         this.jobSeeker = jobSeeker;

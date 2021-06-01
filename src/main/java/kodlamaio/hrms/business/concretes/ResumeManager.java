@@ -1,9 +1,6 @@
 package kodlamaio.hrms.business.concretes;
 
-import kodlamaio.hrms.business.abstracts.JobExperienceService;
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
-import kodlamaio.hrms.business.abstracts.ResumeService;
-import kodlamaio.hrms.business.abstracts.SchoolService;
+import kodlamaio.hrms.business.abstracts.*;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -22,13 +19,17 @@ public class ResumeManager implements ResumeService {
     private final SchoolService schoolService;
     private final JobSeekerService jobSeekerService;
     private final JobExperienceService jobExperienceService;
+    private final ForeignLanguageService foreignLanguageService;
+    private final TechnologyService technologyService;
 
     @Autowired
-    public ResumeManager(ResumeDao resumeDao, SchoolService schoolService, JobSeekerService jobSeekerService, JobExperienceService jobExperienceService) {
+    public ResumeManager(ResumeDao resumeDao, SchoolService schoolService, JobSeekerService jobSeekerService, JobExperienceService jobExperienceService, ForeignLanguageService foreignLanguageService, TechnologyService technologyService) {
         this.resumeDao = resumeDao;
         this.schoolService = schoolService;
         this.jobSeekerService = jobSeekerService;
         this.jobExperienceService = jobExperienceService;
+        this.foreignLanguageService = foreignLanguageService;
+        this.technologyService = technologyService;
     }
 
     public DataResult<List<Resume>> getAll() {
@@ -53,6 +54,16 @@ public class ResumeManager implements ResumeService {
         for (int experienceId : resumeAddDto.getJobExperienceIds()) {
             var jobExperience = this.jobExperienceService.getById(experienceId).getData();
             resume.getJobExperiences().add(jobExperience);
+        }
+
+        for (int foreignLanguageId : resumeAddDto.getForeignLanguageIds()) {
+            var foreignLanguage = this.foreignLanguageService.getById(foreignLanguageId).getData();
+            resume.getForeignLanguages().add(foreignLanguage);
+        }
+
+        for (int technologyId : resumeAddDto.getTechnologyIds()) {
+            var technology = this.technologyService.getById(technologyId).getData();
+            resume.getTechnologies().add(technology);
         }
 
         this.resumeDao.save(resume);
