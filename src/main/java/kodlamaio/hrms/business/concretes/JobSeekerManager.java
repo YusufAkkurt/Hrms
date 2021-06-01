@@ -27,6 +27,13 @@ public class JobSeekerManager implements JobSeekerService {
         return new SuccessDataResult<>(result, "Listelendi");
     }
 
+    public DataResult<JobSeeker> getById(int id) {
+        var result = this.jobSeekerDao.findById(id);
+        return result.isEmpty()
+                ? new ErrorDataResult<>("İş arayan bulunamadı")
+                : new SuccessDataResult<>(result.get(), "Bulundu");
+    }
+
     public DataResult<JobSeeker> getByIdentityNumber(String identityNumber) {
         var result = this.jobSeekerDao.findByIdentityNumber(identityNumber);
 

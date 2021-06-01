@@ -48,4 +48,12 @@ public class Resume {
             joinColumns = {@JoinColumn(name = "resume_id")},
             inverseJoinColumns = {@JoinColumn(name = "school_id")})
     private Set<School> schools = new HashSet<>();
+
+    public Resume(JobSeeker jobSeeker, String imageUrl, String github, String linkedin, String coverLetter) {
+        this.jobSeeker = jobSeeker;
+        this.imageUrl = imageUrl;
+        this.github = github;
+        this.linkedin = linkedin;
+        this.coverLetter = coverLetter;
+    }
 }
