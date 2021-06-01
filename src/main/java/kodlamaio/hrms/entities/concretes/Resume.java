@@ -49,6 +49,13 @@ public class Resume {
             inverseJoinColumns = {@JoinColumn(name = "school_id")})
     private Set<School> schools = new HashSet<>();
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "resume_job_experiences",
+            joinColumns = {@JoinColumn(name = "resume_id")},
+            inverseJoinColumns = {@JoinColumn(name = "job_experience_id")})
+    private Set<JobExperience> jobExperiences = new HashSet<>();
+
     public Resume(JobSeeker jobSeeker, String imageUrl, String github, String linkedin, String coverLetter) {
         this.jobSeeker = jobSeeker;
         this.imageUrl = imageUrl;

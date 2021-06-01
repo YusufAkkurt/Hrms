@@ -16,4 +16,5 @@ public class ResumeAddDto {
     private String linkedin;
     private String coverLetter;
     private List<Integer> schoolIds;
+    private List<Integer> jobExperienceIds;
 }

@@ -1,5 +1,6 @@
 package kodlamaio.hrms.business.concretes;
 
+import kodlamaio.hrms.business.abstracts.JobExperienceService;
 import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.abstracts.ResumeService;
 import kodlamaio.hrms.business.abstracts.SchoolService;
@@ -20,12 +21,14 @@ public class ResumeManager implements ResumeService {
     private final ResumeDao resumeDao;
     private final SchoolService schoolService;
     private final JobSeekerService jobSeekerService;
+    private final JobExperienceService jobExperienceService;
 
     @Autowired
-    public ResumeManager(ResumeDao resumeDao, SchoolService schoolService, JobSeekerService jobSeekerService) {
+    public ResumeManager(ResumeDao resumeDao, SchoolService schoolService, JobSeekerService jobSeekerService, JobExperienceService jobExperienceService) {
         this.resumeDao = resumeDao;
         this.schoolService = schoolService;
         this.jobSeekerService = jobSeekerService;
+        this.jobExperienceService = jobExperienceService;
     }
 
     public DataResult<List<Resume>> getAll() {
@@ -45,6 +48,11 @@ public class ResumeManager implements ResumeService {
         for (int schoolId : resumeAddDto.getSchoolIds()) {
             var school = this.schoolService.getById(schoolId).getData();
             resume.getSchools().add(school);
+        }
+
+        for (int experienceId : resumeAddDto.getJobExperienceIds()) {
+            var jobExperience = this.jobExperienceService.getById(experienceId).getData();
+            resume.getJobExperiences().add(jobExperience);
         }
 
         this.resumeDao.save(resume);

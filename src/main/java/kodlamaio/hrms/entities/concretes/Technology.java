@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "programming_languages")
-public class ProgrammingLanguages {
+@Table(name = "technologies")
+public class Technology {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
