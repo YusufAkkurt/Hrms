@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -34,4 +35,7 @@ public class School {
 
     @Column(name = "active")
     private boolean active = true;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "schools")
+    private List<Resume> resumes;
 }
