@@ -7,7 +7,6 @@ import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.ResumeDao;
 import kodlamaio.hrms.entities.concretes.Resume;
-import kodlamaio.hrms.entities.concretes.School;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class ResumeManager implements ResumeService {
     }
 
     public Result add(Resume resume) {
-        var school = this.schoolManager.getById(1).getData();
+        var school = this.schoolManager.getById(1).getData(); // gelen okul id'lerini gönderebiliriz for ile
         resume.getSchools().add(school);
 
         this.resumeDao.save(resume);

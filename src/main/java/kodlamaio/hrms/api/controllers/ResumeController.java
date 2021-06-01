@@ -4,7 +4,6 @@ import kodlamaio.hrms.business.abstracts.ResumeService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Resume;
-import kodlamaio.hrms.entities.concretes.School;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +26,6 @@ public class ResumeController {
 
     @PostMapping
     public Result add(@RequestBody Resume resume) {
-        for (School school : resume.getSchools()) {
-            resume.getSchools().add(school);
-        }
         return this.resumeService.add(resume);
     }
 }
