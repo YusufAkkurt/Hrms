@@ -12,6 +12,7 @@ import java.util.List;
 public interface ResumeService {
     DataResult<List<Resume>> getAll();
     DataResult<Resume> getById(int id);
+    DataResult<List<Resume>> getByJobSeekerId(int jobSeekerId);
 
     Result add(ResumeAddDto resumeAddDto);
     Result addImage(MultipartFile multipartFile, int id) throws IOException;

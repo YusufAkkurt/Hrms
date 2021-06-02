@@ -3,8 +3,6 @@ package kodlamaio.hrms.api.controllers;
 import kodlamaio.hrms.business.abstracts.ResumeService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
-import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.concretes.Resume;
 import kodlamaio.hrms.entities.dtos.ResumeAddDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +27,13 @@ public class ResumeController {
         return this.resumeService.getAll();
     }
 
+    @GetMapping("getByJobSeekerId")
+    public DataResult<List<Resume>> getByJobSeekerId(@RequestParam int jobSeekerId) {
+        return this.resumeService.getByJobSeekerId(jobSeekerId);
+    }
+
     @PostMapping
-    public Result add(@RequestBody ResumeAddDto resumeAddDto){
+    public Result add(@RequestBody ResumeAddDto resumeAddDto) {
         return this.resumeService.add(resumeAddDto);
     }
 

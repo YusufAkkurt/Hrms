@@ -46,6 +46,13 @@ public class ResumeManager implements ResumeService {
                 : new SuccessDataResult<>(result.get(), "Bulundu");
     }
 
+    public DataResult<List<Resume>> getByJobSeekerId(int jobSeekerId) {
+        var result = this.resumeDao.getByJobSeeker_Id(jobSeekerId);
+        return result.isEmpty()
+                ? new ErrorDataResult<>("Özgeçmiş Bulunamadı")
+                : new SuccessDataResult<>(result, "Bulundu");
+    }
+
     public Result add(ResumeAddDto resumeAddDto) {
         var jobSeeker = this.jobSeekerService.getById(resumeAddDto.getJobSeekerId());
         if (!jobSeeker.isSuccess()) return jobSeeker;

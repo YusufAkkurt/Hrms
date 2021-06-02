@@ -45,28 +45,24 @@ public class Resume {
     @JoinColumn(name = "job_seeker_id")
     private JobSeeker jobSeeker;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "resume_schools",
             joinColumns = {@JoinColumn(name = "resume_id")},
             inverseJoinColumns = {@JoinColumn(name = "school_id")})
     private Set<School> schools = new HashSet<>();
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "resume_job_experiences",
             joinColumns = {@JoinColumn(name = "resume_id")},
             inverseJoinColumns = {@JoinColumn(name = "job_experience_id")})
     private Set<JobExperience> jobExperiences = new HashSet<>();
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "resume_foreign_languages",
             joinColumns = {@JoinColumn(name = "resume_id")},
             inverseJoinColumns = {@JoinColumn(name = "foreign_language_id")})
     private Set<ForeignLanguage> foreignLanguages = new HashSet<>();
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "resume_technologies",
             joinColumns = {@JoinColumn(name = "resume_id")},
