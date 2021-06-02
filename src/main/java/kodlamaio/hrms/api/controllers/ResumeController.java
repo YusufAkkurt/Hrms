@@ -3,11 +3,15 @@ package kodlamaio.hrms.api.controllers;
 import kodlamaio.hrms.business.abstracts.ResumeService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.concretes.Resume;
 import kodlamaio.hrms.entities.dtos.ResumeAddDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,7 +30,12 @@ public class ResumeController {
     }
 
     @PostMapping
-    public Result add(@RequestBody ResumeAddDto resumeAddDto) {
+    public Result add(@RequestBody ResumeAddDto resumeAddDto){
         return this.resumeService.add(resumeAddDto);
+    }
+
+    @PostMapping("addImage")
+    public Result addImage(@RequestBody MultipartFile multipartFile, @RequestParam int id) throws IOException {
+        return this.resumeService.addImage(multipartFile, id);
     }
 }

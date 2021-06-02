@@ -73,9 +73,8 @@ public class Resume {
             inverseJoinColumns = {@JoinColumn(name = "technology_id")})
     private Set<Technology> technologies = new HashSet<>();
 
-    public Resume(JobSeeker jobSeeker, String imageUrl, String github, String linkedin, String coverLetter) {
+    public Resume(JobSeeker jobSeeker, String github, String linkedin, String coverLetter) {
         this.jobSeeker = jobSeeker;
-        this.imageUrl = imageUrl;
         this.github = github;
         this.linkedin = linkedin;
         this.coverLetter = coverLetter;
