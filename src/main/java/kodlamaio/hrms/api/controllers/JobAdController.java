@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/jobAds")
+@CrossOrigin
 public class JobAdController {
     private final JobAdService jobAdService;
 
@@ -41,7 +42,7 @@ public class JobAdController {
     }
 
     @PostMapping("doPassive")
-    private Result add(@RequestBody int jobAdId) {
+    private Result doPassive(@RequestBody int jobAdId) {
         return this.jobAdService.doPassive(jobAdId);
     }
 }
