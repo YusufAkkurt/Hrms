@@ -1,5 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,9 +33,17 @@ public class JobAd {
     @Column(name = "application_deadline")
     private LocalDate applicationDeadline;
 
+    @Column(name = "remote")
+    private boolean remote = false;
+
+    @Column(name = "verified_by_personnel")
+    private boolean verifiedByPersonnel = false;
+
+    @JsonIgnore
     @Column(name = "created_at")
     private LocalDate createdAt = LocalDate.now();
 
+    @JsonIgnore
     @Column(name = "active")
     private boolean active = true;
 
@@ -49,4 +58,8 @@ public class JobAd {
     @ManyToOne
     @JoinColumn(name = "employer_id")
     private Employer employer;
+
+    @ManyToOne
+    @JoinColumn(name = "work_type_id")
+    private WorkType workType;
 }

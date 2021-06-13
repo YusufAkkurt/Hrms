@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/jobAds")
-@CrossOrigin
 public class JobAdController {
     private final JobAdService jobAdService;
 
